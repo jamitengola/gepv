@@ -1,0 +1,58 @@
+﻿@model gepv.Models.Categoria
+@using gepv.Models
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+    ViewBag.Title = "Criar";
+}
+
+
+<h6 class="element-header">
+    Adicionar Nova Categoria
+</h6>
+
+<div class="element-content">
+    <div class="row">
+        <div class="col-sm-12 col-xxxl-3">
+            <a class="element-box el-tablo" href="/Categorias/Index">
+                <div class="label">
+                    Todos as Categorias
+                </div>
+                <div class="value">
+                    @db.Categorias.Count()
+                </div>
+
+            </a>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="element-box">
+    <div class="form-horizontal">
+        <h4>Categoria</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar " class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

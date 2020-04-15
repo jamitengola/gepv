@@ -1,0 +1,156 @@
+﻿@model IEnumerable<gepv.Models.Produtos>
+    @using gepv.Models
+
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row">
+    <div class="col-sm-9 col-xxxl-6">
+        <div class="element-wrapper">
+            <h6 class="element-header">
+                Produtos Cadastrados
+            </h6>
+            <div class="element-box">
+
+                <p>
+                    <a href="/Produtos/create" class="btn btn-primary">Adicionar Novo Produto</a>
+                </p>
+
+
+                <div class="table-responsive">
+                    <table class="table table-lightborder">
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nome)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Quantidade)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DataCadastro)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Preco)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img style="max-height:50px" src="~/img/Produtos/@item.Imagem" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantidade)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataCadastro)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Preco)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Apagar", "Delete", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 d-xxxl-none">
+        <!--START - Top Selling Chart-->
+        <div class="element-wrapper">
+            <h6 class="element-header">
+Produto por categorias
+            </h6>
+            <div class="element-box">
+                <div class="el-chart-w">
+                    <canvas height="120" id="donutChart" width="120"></canvas>
+                    <div class="inside-donut-chart-label">
+                        <strong>0</strong><span>Venda Total</span>
+                    </div>
+                </div>
+                <div class="el-legend condensed">
+                    <div class="row">@foreach (var i in db.Categorias)
+                    {
+                        <div class="col-auto col-xxxxl-12 ml-sm-auto mr-sm-auto col-6">
+                            <div class="legend-value-w">
+                                <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+                                <div class="legend-value">
+                                    <span>@i.Nome</span>
+                                    <div class="legend-sub-value">
+                                    </div>
+                                </div>
+                            </div>                          
+                        </div>
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END - Top Selling Chart-->
+    </div>
+</div>
+@section scripts{
+<script type="text/javascript">
+
+    var categoria ='@db.Categorias.First().Nome';
+    // -----------------
+    // init donut chart if element exists
+    // -----------------
+    if ($("#donutChart").length) {
+      var donutChart = $("#donutChart");
+
+      // donut chart data
+        var data = {
+            labels: ["Categoria1", "Escolar", categoria],
+        datasets: [{
+          data: [300, 500, @db.Produtos.Where(x=>x.Categoria.Id==2).Count()],
+          backgroundColor: ["#5797fc", "#7e6fff", "#000"],
+          hoverBackgroundColor: ["#5797fc", "#7e6fff", "#000"],
+          borderWidth: 0
+        }]
+      };
+
+      // -----------------
+      // init donut chart
+      // -----------------
+      new Chart(donutChart, {
+        type: 'doughnut',
+        data: data,
+        options: {
+          legend: {
+            display: false
+          },
+          animation: {
+            animateScale: true
+          },
+          cutoutPercentage: 80
+        }
+      });
+    }
+
+    </script>    
+}

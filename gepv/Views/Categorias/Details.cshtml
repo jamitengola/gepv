@@ -1,0 +1,32 @@
+﻿@model gepv.Models.Categoria
+
+@{
+    ViewBag.Title = "Details";
+}
+
+    <div class="element-wrapper">
+
+        <div class="element-box" style="text-align:center">
+
+            
+            <h3>Detalhes</h3>
+            <div>
+                <p>
+                    <a href="/Categorias/Index" class="btn btn-primary">Todas as Categorias</a>
+                </p>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Nome)
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+
+

@@ -1,0 +1,48 @@
+﻿@model gepv.Models.Fornecedor
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h3 class="element-header">Tem a certeza que deseja apagar esse fornecedor?</h3>
+<div class="element-box">
+    <h4>Fornecedor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Endereco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Endereco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Apagar" class="btn btn-danger" /> |
+
+    <a href="/Fornecedors/Index" class="btn btn-default">Voltar a lista de Fornecedores</a>
+</div>
+    }
+</div>
