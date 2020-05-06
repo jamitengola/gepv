@@ -64,6 +64,8 @@ namespace gepv.Models
 
     public class RegisterViewModel
     {
+        public string FirstName { get; internal set; }
+        public string LastName { get; internal set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

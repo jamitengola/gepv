@@ -15,16 +15,18 @@ namespace gepv.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Produtos
+        // GET: Produtos   
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Produtos.ToList());
-        } 
+        }
+        [Authorize]
         public ActionResult Relatorios()
         {
             return View(db.Produtos.ToList());
         }
-
+        [Authorize]
         // GET: Produtos/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,7 +41,7 @@ namespace gepv.Controllers
             }
             return View(produtos);
         }
-
+        [Authorize]
         // GET: Produtos/Create
         public ActionResult Create()
         {
@@ -49,6 +51,7 @@ namespace gepv.Controllers
         // POST: Produtos/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nome,Quantidade,Imagem,DataCadastro,Preco")] Produtos produtos, HttpPostedFileBase file,int Categoria)
@@ -82,7 +85,7 @@ namespace gepv.Controllers
 
             return View(produtos);
         }
-
+        [Authorize]
         // GET: Produtos/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -97,11 +100,12 @@ namespace gepv.Controllers
             }
             return View(produtos);
         }
-        
+
 
         // POST: Produtos/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Nome,Quantidade,Imagem,DataCadastro,Preco")] Produtos produtos)
@@ -117,6 +121,7 @@ namespace gepv.Controllers
         }
 
         // GET: Produtos/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -130,8 +135,7 @@ namespace gepv.Controllers
             }
             return View(produtos);
         }
-
-        // POST: Produtos/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

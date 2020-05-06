@@ -9,6 +9,8 @@ namespace gepv.Models
     // É possível adicionar dados do perfil do usuário adicionando mais propriedades na sua classe ApplicationUser, visite https://go.microsoft.com/fwlink/?LinkID=317594 para obter mais informações.
     public class ApplicationUser : IdentityUser
     {
+        public string FirstName { get; internal set; }
+        public string LastName { get; internal set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Observe que o authenticationType deve corresponder àquele definido em CookieAuthenticationOptions.AuthenticationType

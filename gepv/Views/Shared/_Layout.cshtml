@@ -18,131 +18,11 @@
     <link href="~/css/main.css?version=4.4.0" rel="stylesheet">
 
 </head>
+@using Microsoft.AspNet.Identity
 <body class="menu-position-side menu-side-left full-screen with-content-panel">
     <div class="all-wrapper with-side-panel solid-bg-all">
         <div class="search-with-suggestions-w">
-            <div class="search-with-suggestions-modal">
-                <div class="element-search">
-                    <input class="search-suggest-input" placeholder="Start typing to search..." type="text">
-                    <div class="close-search-suggestions">
-                        <i class="os-icon os-icon-x"></i>
-                    </div>
-                    <input/>
-                </div>
-                <div class="search-suggestions-group">
-                    <div class="ssg-header">
-                        <div class="ssg-icon">
-                            <div class="os-icon os-icon-box"></div>
-                        </div>
-                        <div class="ssg-name">
-                            Projects
-                        </div>
-                        <div class="ssg-info">
-                            24 Total
-                        </div>
-                    </div>
-                    <div class="ssg-content">
-                        <div class="ssg-items ssg-items-boxed">
-                            <a class="ssg-item" href="#">
-                                <div class="item-media" style="background-image: url(img/company6.png)"></div>
-                                <div class="item-name">
-                                    Integ<span>ration</span> with API
-                                </div>
-                            </a><a class="ssg-item" href="#">
-                                <div class="item-media" style="background-image: url(img/company7.png)"></div>
-                                <div class="item-name">
-                                    Deve<span>lopm</span>ent Project
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="search-suggestions-group">
-                    <div class="ssg-header">
-                        <div class="ssg-icon">
-                            <div class="os-icon os-icon-users"></div>
-                        </div>
-                        <div class="ssg-name">
-                            Customers
-                        </div>
-                        <div class="ssg-info">
-                            12 Total
-                        </div>
-                    </div>
-                    <div class="ssg-content">
-                        <div class="ssg-items ssg-items-list">
-                            <a class="ssg-item" href="#">
-                                <div class="item-media" style="background-image: url(img/avatar1.jpg)"></div>
-                                <div class="item-name">
-                                    John Ma<span>yer</span>s
-                                </div>
-                            </a><a class="ssg-item" href="#">
-                                <div class="item-media" style="background-image: url(img/avatar2.jpg)"></div>
-                                <div class="item-name">
-                                    Th<span>omas</span> Mullier
-                                </div>
-                            </a><a class="ssg-item" href="#">
-                                <div class="item-media" style="background-image: url(img/avatar3.jpg)"></div>
-                                <div class="item-name">
-                                    Kim C<span>olli</span>ns
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="search-suggestions-group">
-                    <div class="ssg-header">
-                        <div class="ssg-icon">
-                            <div class="os-icon os-icon-folder"></div>
-                        </div>
-                        <div class="ssg-name">
-                            Files
-                        </div>
-                        <div class="ssg-info">
-                            17 Total
-                        </div>
-                    </div>
-                    <div class="ssg-content">
-                        <div class="ssg-items ssg-items-blocks">
-                            <a class="ssg-item" href="#">
-                                <div class="item-icon">
-                                    <i class="os-icon os-icon-file-text"></i>
-                                </div>
-                                <div class="item-name">
-                                    Work<span>Not</span>e.txt
-                                </div>
-                            </a><a class="ssg-item" href="#">
-                                <div class="item-icon">
-                                    <i class="os-icon os-icon-film"></i>
-                                </div>
-                                <div class="item-name">
-                                    V<span>ideo</span>.avi
-                                </div>
-                            </a><a class="ssg-item" href="#">
-                                <div class="item-icon">
-                                    <i class="os-icon os-icon-database"></i>
-                                </div>
-                                <div class="item-name">
-                                    User<span>Tabl</span>e.sql
-                                </div>
-                            </a><a class="ssg-item" href="#">
-                                <div class="item-icon">
-                                    <i class="os-icon os-icon-image"></i>
-                                </div>
-                                <div class="item-name">
-                                    wed<span>din</span>g.jpg
-                                </div>
-                            </a>
-                        </div>
-                        <div class="ssg-nothing-found">
-                            <div class="icon-w">
-                                <i class="os-icon os-icon-eye-off"></i>
-                            </div>
-                            <span>No files were found. Try changing your query...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <div class="layout-w">
             <!--------------------
@@ -154,6 +34,7 @@
             <!--------------------
             START - Main Menu
             -------------------->
+             @using gepv.Models;
             <div  class="menu-w color-scheme-light color-style-transparent menu-position-side menu-side-left menu-layout-compact sub-menu-style-over sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
                 <div class="logo-w">
                     <a class="logo" href="/home/index">
@@ -166,16 +47,23 @@
                 <div class="logged-user-w avatar-inline">
                     <div class="logged-user-i">
                         <div class="avatar-w">
-                            <img alt="" src="/img/avatar1.jpg">
+                            @{
+
+                                var imgUrl = Url.Content("~/Content/images/profile/" + User.Identity.GetUserName() + ".png") + "?time=" + DateTime.Now.ToString();
+                                var db = new ApplicationDbContext();
+                                var nome = db.Users.Find(User.Identity.GetUserId()).FirstName + " " + db.Users.Find(User.Identity.GetUserId()).LastName;
+                            }
+                            <img alt="" src="@imgUrl">
                         </div>
-                        <div class="logged-user-info-w">
-                            <div class="logged-user-name">
-                                Nome Completo
+                            <div class="logged-user-info-w">
+                                <div class="logged-user-name">
+                                    <a href="/Manage/Index">
+                                        @nome
+                                    </a>
+                                </div>
+                               
                             </div>
-                            <div class="logged-user-role">
-                                Administrador
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
                 <h1 class="menu-page-header">
@@ -272,9 +160,6 @@
                                         <a href="/Produtos/Index">Produtos</a>
                                     </li>
                                     <li>
-                                        <a href="/Produtos/Relatorios">Relatórios</a>
-                                    </li>
-                                    <li>
                                         <a href="/Fornecedors/Index">Fornecedores</a>
                                     </li>
                                     <li>
@@ -310,46 +195,46 @@
                                     <li>
                                         <a href="/Clientes/Create">Adicionar Clientes</a>
                                     </li>
-                                    <li>
-                                        <a href="/Clientes/Informacoes">Informações</a>
-                                    </li>
+
 
                                 </ul>
                             </div>
                         </div>
-                    </li>
-                    <li class=" has-sub-menu">
-                        <a href="#">
-                            <div class="icon-w">
-                                <div class="os-icon os-icon-users"></div>
-                            </div>
-                            <span>Usuários</span>
-                        </a>
-                        <div class="sub-menu-w">
-                            <div class="sub-menu-header">
-                                Usuários
-                            </div>
-                            <div class="sub-menu-icon">
-                                <i class="os-icon os-icon-users"></i>
-                            </div>
-                            <div class="sub-menu-i">
-                                <ul class="sub-menu">
+                    </li>  
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class=" has-sub-menu">
+                            <a href="#">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-users"></div>
+                                </div>
+                                <span>Usuários</span>
+                            </a>
+                            <div class="sub-menu-w">
+                                <div class="sub-menu-header">
+                                    Usuários
+                                </div>
+                                <div class="sub-menu-icon">
+                                    <i class="os-icon os-icon-users"></i>
+                                </div>
 
-                                    <li>
-                                        <a href="/Usuarios/Index">Todos os Usuários</a>
-                                    </li>
-                                    <li>
-                                        <a href="/Usuarios/Nivel">Nivel de Acessos</a>
-                                    </li>
-                                    <li>
-                                        <a href="/Usuarios/Previlegios">Previlégios</a>
-                                    </li>
+                                <div class="sub-menu-i">
+                                    <ul class="sub-menu">
 
-                                </ul>
+                                        <li>
+                                            <a href="/Admin/Index">Todos os Usuários</a>
+                                        </li>
+                                        <li>
+                                            <a href="/Account/Register">Novo Usuário</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
 
+                    }
                     <li class=" has-sub-menu">
                         <a href="#">
                             <div class="icon-w">
@@ -373,7 +258,7 @@
                                     <li>
                                         <a href="/Saidas/Index">Relatório de Vendas</a>
                                     </li>
-                                   
+
 
                                 </ul>
                             </div>
@@ -384,7 +269,7 @@
             <!--------------------
             END - Main Menu
             -------------------->
-            <div style="min-height:700px" class="content-w">
+            <div style="min-height:900px" class="content-w">
                 <!--------------------
     START - Top Bar
     -------------------->
@@ -410,16 +295,16 @@
                                 </div>
                                 <ul>
                                     <li>
-                                        <a href="#"><i class="os-icon os-icon-ui-49"></i><span>Definições de Perfil</span></a>
-                                    </li>
+                                        <a href="/Manage/Index"><i class="os-icon os-icon-ui-49"></i><span>Definições de Perfil</span></a>
+                                    </li>                                   
                                     <li>
-                                        <a href="#"><i class="os-icon os-icon-grid-10"></i><span>Informações de Faturação</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="os-icon os-icon-ui-44"></i><span>Facturas</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="os-icon os-icon-ui-15"></i><span>Cancelar Conta</span></a>
+                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                        {
+                                        @Html.AntiForgeryToken()
+
+                                    <a href="javascript:document.getElementById('logoutForm').submit()"><i class="os-icon os-icon-ui-93"></i>Sair</a>
+                                      
+                                        }
                                     </li>
                                 </ul>
                             </div>
@@ -430,48 +315,7 @@
                         <!--------------------
             START - User avatar and menu in secondary top menu
             -------------------->
-                        <div class="logged-user-w">
-                            <div class="logged-user-i">
-                                <div class="avatar-w">
-                                    <img alt="" src="img/avatar1.jpg">
-                                </div>
-                                <div class="logged-user-menu color-style-bright">
-                                    <div class="logged-user-avatar-info">
-                                        <div class="avatar-w">
-                                            <img alt="" src="img/avatar1.jpg">
-                                        </div>
-                                        <div class="logged-user-info-w">
-                                            <div class="logged-user-name">
-                                                Maria Gomez
-                                            </div>
-                                            <div class="logged-user-role">
-                                                Administrator
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bg-icon">
-                                        <i class="os-icon os-icon-wallet-loaded"></i>
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <a href="#"><i class="os-icon os-icon-mail-01"></i><span>Incoming Mail</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="os-icon os-icon-user-male-circle2"></i><span>Profile Details</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="os-icon os-icon-coins-4"></i><span>Billing Details</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="os-icon os-icon-others-43"></i><span>Notifications</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                       
                         <!--------------------
             END - User avatar and menu in secondary top menu
             -------------------->

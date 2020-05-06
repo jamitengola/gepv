@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using gepv.Models;
+using System.IO;
+using System.Web.Hosting;
 
 namespace gepv.Controllers
 {
@@ -332,10 +334,46 @@ namespace gepv.Controllers
 
             base.Dispose(disposing);
         }
+        #region Upload Photo
 
-#region Auxiliadores
+        [HttpPost]
+        public async Task<ActionResult> UploadPhoto(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var user = await GetCurrentUserAsync();
+                var username = user.UserName;
+                var fileExt = Path.GetExtension(file.FileName);
+                var fnm = username + ".png";
+                if (fileExt.ToLower().EndsWith(".png") || fileExt.ToLower().EndsWith(".jpg") || fileExt.ToLower().EndsWith(".gif"))// Important for security if saving in webroot
+                {
+                    var filePath = HostingEnvironment.MapPath("~/Content/images/profile/") + fnm;
+                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/Content/images/profile/"));
+                    if (directory.Exists == false)
+                    {
+                        directory.Create();
+                    }
+                    ViewBag.FilePath = filePath.ToString();
+                    file.SaveAs(filePath);
+                    return RedirectToAction("Index", new { Message = "Ficheiro Carregado com sucesso" });
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { Message = "Erro no carregamento do ficheiro" });
+                }
+            }
+            return RedirectToAction("Index", new { Message = ManageMessageId.Error });// PRG
+        }
+
+        #endregion Upload Photo
+
+        #region Auxiliadores
         // Usado para proteção XSRF ao adicionar logins externos
         private const string XsrfKey = "XsrfId";
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await UserManager.FindByIdAsync(User.Identity.GetUserId());
+        }
 
         private IAuthenticationManager AuthenticationManager
         {

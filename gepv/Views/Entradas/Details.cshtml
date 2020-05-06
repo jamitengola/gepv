@@ -1,12 +1,19 @@
 ﻿@model gepv.Models.Entrada
-
+@using gepv.Models
 @{
+    ApplicationDbContext db = new ApplicationDbContext();
+
+    List<Entrada> entradas = new List<Entrada>();
+    foreach(var i in db.Entradas)
+    {
+        entradas.Add(i);
+    }
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="element-header">Details</h2>
 
-<div>
+<div class="element-box">
     <h4>Entrada</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -27,8 +34,46 @@
         </dd>
 
     </dl>
+    <div class="table-responsive">
+
+        <table class="table">
+            <tr>
+                <th>
+                    Nome do Produto
+                </th>
+                <th>
+                    Nome do Fornecedor
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantidade)
+                </th>
+                <th>
+                    Data de Chagada
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in db.Produtos.Where(x=>x.Id==entradas.First().Id))
+            {
+                <tr>
+                    <td>
+                        <a href="/Entradas/Details/@item.Id">
+                         @item.Nome
+                        </a>
+                    </td>
+                    <td>
+                        @*@fornecedors.Where(x => x.Id == item.Fornecedor.Id).First().Nome*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Datachegada)*@
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

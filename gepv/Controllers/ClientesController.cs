@@ -14,13 +14,15 @@ namespace gepv.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Clientes
+        // GET: Clientes   
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Clientes.ToList());
         }
 
         // GET: Clientes/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace gepv.Controllers
         }
 
         // GET: Clientes/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +47,7 @@ namespace gepv.Controllers
         // POST: Clientes/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nome,Endereço")] Cliente cliente)
@@ -59,6 +63,7 @@ namespace gepv.Controllers
         }
 
         // GET: Clientes/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,7 +94,8 @@ namespace gepv.Controllers
             return View(cliente);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Clientes/Delete/5   
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -15,12 +15,14 @@ namespace gepv.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categorias
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Categorias.ToList());
         }
 
         // GET: Categorias/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace gepv.Controllers
         }
 
         // GET: Categorias/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -43,7 +46,8 @@ namespace gepv.Controllers
 
         // POST: Categorias/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.   
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nome")] Categoria categoria)
@@ -76,6 +80,7 @@ namespace gepv.Controllers
         // POST: Categorias/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Nome")] Categoria categoria)
@@ -90,6 +95,7 @@ namespace gepv.Controllers
         }
 
         // GET: Categorias/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +111,7 @@ namespace gepv.Controllers
         }
 
         // POST: Categorias/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -1,0 +1,37 @@
+﻿@using gepv.Models
+@using Microsoft.AspNet.Identity
+@{
+
+    ApplicationDbContext db = new ApplicationDbContext();
+    ViewBag.Title = "Index";
+}
+
+
+    <div class="element-wrapper">
+        <div class="col-md-12">
+            <h6 class="element-header">
+                Lista de Entrada de Produtos
+                <a style="float:right" href="/Usuarios/Novo" class="btn btn-primary">Registar Novo Usuário</a>
+            </h6>
+           
+                @foreach (var i in db.Users.ToList())
+                {
+        <div class="col-md-4">
+            <div class="element-box">
+                @if (User.Identity.GetUserName() != null)
+                {
+                    var imgUrl = Url.Content("~/Content/images/profile/" + User.Identity.GetUserName() + ".png") + "?time=" + DateTime.Now.ToString();
+                    <div class="upimage">
+                        <div class="accimg">
+                            <img src="@imgUrl" height="200" width="200" />
+                        </div>
+                        <h6>Nome:@i.UserName</h6>
+                        <h6>Nivel de Acesso:@db.Roles.ToList().First().Name</h6>
+                    </div>
+                }
+            </div>
+
+            </div>
+            }
+        </div>
+    </div>

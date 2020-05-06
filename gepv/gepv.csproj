@@ -48,6 +48,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -170,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EntradasController.cs" />
@@ -178,6 +185,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProdutosController.cs" />
     <Compile Include="Controllers\SaidasController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -188,6 +196,18 @@
     <Compile Include="Migrations\202003252126113_imagem.cs" />
     <Compile Include="Migrations\202003252126113_imagem.Designer.cs">
       <DependentUpon>202003252126113_imagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004151411217_fornecedor.cs" />
+    <Compile Include="Migrations\202004151411217_fornecedor.Designer.cs">
+      <DependentUpon>202004151411217_fornecedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004271547452_firsname.cs" />
+    <Compile Include="Migrations\202004271547452_firsname.Designer.cs">
+      <DependentUpon>202004271547452_firsname.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004271616517_preco.cs" />
+    <Compile Include="Migrations\202004271616517_preco.Designer.cs">
+      <DependentUpon>202004271616517_preco.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -4500,6 +4520,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="css\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -5664,6 +5685,13 @@
     <Content Include="Views\Saidas\Edit.cshtml" />
     <Content Include="Views\Saidas\Index.cshtml" />
     <Content Include="Views\Produtos\Relatorios.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Usuarios\NivelAcesso.cshtml" />
+    <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ShowUserDetails.cshtml" />
+    <Content Include="Views\Admin\SaveUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5695,6 +5723,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003252126113_imagem.resx">
       <DependentUpon>202003252126113_imagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004151411217_fornecedor.resx">
+      <DependentUpon>202004151411217_fornecedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004271547452_firsname.resx">
+      <DependentUpon>202004271547452_firsname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004271616517_preco.resx">
+      <DependentUpon>202004271616517_preco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

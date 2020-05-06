@@ -15,12 +15,14 @@ namespace gepv.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Fornecedors
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Fornecedors.ToList());
         }
 
         // GET: Fornecedors/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace gepv.Controllers
         }
 
         // GET: Fornecedors/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +47,7 @@ namespace gepv.Controllers
         // POST: Fornecedors/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nome,Endereco,Telefone")] Fornecedor fornecedor)
@@ -59,6 +63,7 @@ namespace gepv.Controllers
         }
 
         // GET: Fornecedors/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +81,7 @@ namespace gepv.Controllers
         // POST: Fornecedors/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Nome,Endereco,Telefone")] Fornecedor fornecedor)
@@ -90,6 +96,7 @@ namespace gepv.Controllers
         }
 
         // GET: Fornecedors/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +112,7 @@ namespace gepv.Controllers
         }
 
         // POST: Fornecedors/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

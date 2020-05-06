@@ -1,39 +1,128 @@
 ﻿@model IEnumerable<gepv.Models.Entrada>
-
+@using gepv.Models
 @{
+    ApplicationDbContext db = new ApplicationDbContext();
+    List<Produtos> pro = new List<Produtos>();
+    foreach(var i in db.Produtos)
+    {
+        pro.Add(i);
+    } 
+    List<Cliente> cliente = new List<Cliente>();
+    foreach(var i in db.Clientes)
+    {
+        cliente.Add(i);
+    }  
+    List<Fornecedor> fornecedors = new List<Fornecedor>();
+    foreach(var i in db.Fornecedors)
+    {
+        fornecedors.Add(i);
+    }
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantidade)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Datachegada)
-        </th>
-        <th></th>
-    </tr>
+    <div class="element-wrapper">
+        <div class="col-md-12">
+            <h6 class="element-header">
+                Lista de Entrada de Produtos
+                <a style="float:right" href="/Entradas/create" class="btn btn-primary">Registar Nova Entrada</a>
+            </h6>
+            <div class="element-box">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantidade)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Datachegada)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+                <div class="table-responsive">
 
-</table>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Nome do Produto
+                            </th>
+                            <th>
+                                Nome do Fornecedor
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Quantidade)
+                            </th>
+                            <th>
+                                Data de Chagada
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in db.Entradas)
+                        {
+                            <tr>
+                                <td>
+
+                                    @pro.Where(x => x.Id == item.Produto.Id).First().Nome
+                                </td>
+                                <td>
+                                    @fornecedors.Where(x => x.Id == item.Fornecedor.Id).First().Nome
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantidade)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Datachegada)
+                                </td>
+
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h6 class="element-header">
+                Lista de Saida de Produtos
+                <a style="float:right" href="/Saidas/Index" class="btn btn-primary">Ver Relatório Completo</a>
+            </h6>
+            
+            <div class="element-box">
+
+                <div class="table-responsive">
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Nome do Produto
+                            </th>
+                            <th>
+                                Nome do Cliente
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Quantidade)
+                            </th>
+                            <th>
+                                Data de Saída
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in db.Saidas)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Saidas/Details/@item.Id">
+                                        @pro.Where(x => x.Id == item.Produto.Id).First().Nome
+                                    </a>
+                                </td>
+                                <td>
+                                    @cliente.Where(x => x.Id == item.Cliente.Id).First().Nome
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantidade)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataSaida)
+                                </td>
+
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+

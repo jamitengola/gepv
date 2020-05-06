@@ -1,4 +1,5 @@
 ﻿@model gepv.Models.IndexViewModel
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Gerenciar";
 }
@@ -6,10 +7,32 @@
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div>
+<div class="element-box">
     <h4>Alterar as configurações de conta</h4>
     <hr />
+
     <dl class="dl-horizontal">
+        <dt>Foto de Perfil:</dt>
+        <dd>
+            @if (User.Identity.GetUserName() != null)
+            {
+                var imgUrl = Url.Content("~/Content/images/profile/" + User.Identity.GetUserName() + ".png") + "?time=" + DateTime.Now.ToString();
+                <div class="upimage">
+                    <div class="accimg">
+                        <img src="@imgUrl" height="250" width="250" />
+                    </div>
+                    <div class="mngimg">
+                        @using (Html.BeginForm("UploadPhoto", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="btn btn-default browseimg">
+                                <input type="file" name="file" id="files" onchange="this.form.submit()" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+        </dd>
         <dt>Senha:</dt>
         <dd>
             [
@@ -23,65 +46,6 @@
             }
             ]
         </dd>
-        <dt>Logins externos:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Gerenciar", "ManageLogins") ]
-        </dd>
-        @*
-            Os Números de Telefone podem ser usados como um segundo fator de verificação em um sistema de autenticação de dois fatores.
-             
-             Confira <a href="https://go.microsoft.com/fwlink/?LinkId=403804">este artigo</a>
-                para obter detalhes de como configurar este aplicativo ASP.NET para permitir a autenticação de dois fatores usando SMS.
-             
-             Remova a marca de comentário do bloco a seguir depois de configurar a autenticação de dois fatores
-        *@
-        @*  
-            <dt>Número de Telefone:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
-                {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remover" class="btn-link" />]</text>
-                    }
-                }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
-        *@
-        <dt>Autenticação de dois fatores:</dt>
-        <dd>
-            <p>
-                Não há nenhum provedor de autenticação de dois fatores configurado. Confira <a href="https://go.microsoft.com/fwlink/?LinkId=403804">este artigo</a>
-                para obter detalhes de como configurar este aplicativo ASP.NET para permitir a autenticação de dois fatores.
-            </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Habilitado
-                        <input type="submit" value="Desabilitar" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Desabilitado
-                        <input type="submit" value="Habilitar" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
-        </dd>
+     
     </dl>
 </div>

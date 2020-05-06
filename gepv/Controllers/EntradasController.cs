@@ -15,12 +15,14 @@ namespace gepv.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Entradas
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Entradas.ToList());
         }
 
-        // GET: Entradas/Details/5
+        // GET: Entradas/Details/5  
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace gepv.Controllers
         }
 
         // GET: Entradas/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -44,13 +47,18 @@ namespace gepv.Controllers
         // POST: Entradas/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Quantidade,Datachegada")] Entrada entrada)
+        public ActionResult Create([Bind(Include = "Id,Quantidade,Datachegada")] Entrada entrada,int Fornecedors, int Produtos)
         {
+            entrada.Datachegada = DateTime.Now;
+            entrada.Fornecedor = db.Fornecedors.Find(Fornecedors);
+            entrada.Produto = db.Produtos.Find(Produtos);
             if (ModelState.IsValid)
             {
                 db.Entradas.Add(entrada);
+                db.Produtos.Find(Produtos).Quantidade += entrada.Quantidade;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -59,6 +67,7 @@ namespace gepv.Controllers
         }
 
         // GET: Entradas/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +85,7 @@ namespace gepv.Controllers
         // POST: Entradas/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Quantidade,Datachegada")] Entrada entrada)
@@ -90,6 +100,7 @@ namespace gepv.Controllers
         }
 
         // GET: Entradas/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +116,7 @@ namespace gepv.Controllers
         }
 
         // POST: Entradas/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
