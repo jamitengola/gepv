@@ -54,6 +54,9 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -4875,6 +4878,10 @@
     <Content Include="js\main.js" />
     <Content Include="js\main_rentals.js" />
     <Content Include="js\popup_chat_trigger_demo.js" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="bower_components\.DS_Store" />
@@ -5608,6 +5615,7 @@
     <Content Include="icon_fonts_assets\weather-icons\sass\weather-icons-wind.scss" />
     <Content Include="icon_fonts_assets\weather-icons\sass\weather-icons.min.scss" />
     <Content Include="icon_fonts_assets\weather-icons\sass\weather-icons.scss" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -5692,6 +5700,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ShowUserDetails.cshtml" />
     <Content Include="Views\Admin\SaveUser.cshtml" />
+    <Content Include="Views\Saidas\Relatorios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -72,7 +72,7 @@ namespace gepv.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "O/A {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "O/A {0} deve ter no mínimo {2} caracteres.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Senha")]
         public string Password { get; set; }

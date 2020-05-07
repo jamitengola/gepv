@@ -1,0 +1,107 @@
+﻿@model IEnumerable<gepv.Models.Saida>
+@using gepv.Models
+@{
+    Layout = null;
+    ApplicationDbContext db = new ApplicationDbContext();
+    List<Produtos> pro = new List<Produtos>();
+    foreach (var i in db.Produtos)
+    {
+        pro.Add(i);
+    }
+    List<Cliente> cliente = new List<Cliente>();
+    foreach (var i in db.Clientes)
+    {
+        cliente.Add(i);
+    }
+    List<Fornecedor> fornecedors = new List<Fornecedor>();
+    foreach (var i in db.Fornecedors)
+    {
+        fornecedors.Add(i);
+    }
+    List<ApplicationUser> users = new List<ApplicationUser>();
+    foreach (var i in db.Users)
+    {
+        users.Add(i);
+    }
+    string data = Convert.ToString(ViewBag.Data);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Relatório</title>
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css">
+    <link href="~/bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="~/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="~/bower_components/dropzone/dist/dropzone.css" rel="stylesheet">
+    <link href="~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+    <link href="~/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="~/bower_components/slick-carousel/slick/slick.css" rel="stylesheet">
+    <link href="~/css/main.css?version=4.4.0" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <div class="element-box">
+            <table class="table">
+                <tr>
+
+                    <th>
+                        Vendedor
+                    </th>
+                    <th>
+                        Data de Venda
+                    </th>
+                    <th>
+                        Produto
+                    </th>
+                    <th>
+                        Cliente
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantidade)
+                    </th>
+                    <th>
+                        Valor da Compra
+                    </th>
+                </tr>
+
+                @foreach (var item in db.Saidas.ToList().Where(x=>x.DataSaida>DateTime.Parse(data)))
+                {
+                    var total = pro.Where(x => x.Id == item.Produto.Id).First().Preco * item.Quantidade;
+                    <tr>
+
+                        <td>
+                            @if (item.Usuario != null)
+                            {
+                                <i>
+                                    @users.Where(x => x.Id == item.Usuario.Id).First().FirstName @users.Where(x => x.Id == item.Usuario.Id).First().LastName
+                                </i>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataSaida)
+                        </td>
+                        <td>
+                            @pro.Where(x => x.Id == item.Produto.Id).First().Nome
+                        </td>
+                        <td>
+                            @cliente.Where(x => x.Id == item.Cliente.Id).First().Nome
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantidade)
+                        </td>
+                        <td>
+                            @total,00Kzs
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>

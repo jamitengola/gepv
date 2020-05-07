@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using gepv.Models;
 using Microsoft.AspNet.Identity;
+using Rotativa;
 
 namespace gepv.Controllers
 {
@@ -143,6 +144,18 @@ namespace gepv.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+     
+        public ActionResult PrintInvoice(string data)
+        {
+
+            return new Rotativa.ActionAsPdf("Relatorios", new { data = data });
+        } 
+        public ActionResult Relatorios(string data) 
+        {
+            ViewBag.Data = data;
+            
+            return View(db.Saidas.ToList().Where(x=>x.DataSaida>DateTime.Parse(data)));
         }
     }
 }

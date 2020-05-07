@@ -149,11 +149,11 @@ namespace gepv.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string FirstName,string LastName)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { FirstName= model.FirstName, LastName=model.LastName,UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { FirstName= FirstName, LastName=LastName,UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
