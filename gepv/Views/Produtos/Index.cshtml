@@ -4,6 +4,11 @@
 @{
     ApplicationDbContext db = new ApplicationDbContext();
     ViewBag.Title = "Index";
+      List<Produtos> pro = new List<Produtos>();
+    foreach (var i in db.Produtos)
+    {
+        pro.Add(i);
+    }
 }
 
 
@@ -86,9 +91,9 @@ Produto por categorias
             </h6>
             <div class="element-box">
                 <div class="el-chart-w">
-                    <canvas height="120" id="donutChart" width="120"></canvas>
+                    <canvas height="120"  width="120"></canvas>
                     <div class="inside-donut-chart-label">
-                        <strong>0</strong><span>Venda Total</span>
+                        <strong>@db.Produtos.Count()</strong><span>Total</span>
                     </div>
                 </div>
                 <div class="el-legend condensed">
@@ -101,6 +106,7 @@ Produto por categorias
                                 <div class="legend-value">
                                     <span>@i.Nome</span>
                                     <div class="legend-sub-value">
+                                        @pro.Where(x=>x.Categoria.Id==i.Id).Count()
                                     </div>
                                 </div>
                             </div>                          

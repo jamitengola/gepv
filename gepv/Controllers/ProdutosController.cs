@@ -17,9 +17,9 @@ namespace gepv.Controllers
 
         // GET: Produtos   
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string palavra="")
         {
-            return View(db.Produtos.ToList());
+            return View(db.Produtos.Where(x=>x.Nome.Contains(palavra)).ToList());
         }
         [Authorize]
         public ActionResult Relatorios()
